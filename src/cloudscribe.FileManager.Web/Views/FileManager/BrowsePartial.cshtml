@@ -1,0 +1,173 @@
+﻿@using cloudscribe.FileManager.Web.Models
+@using Microsoft.Extensions.Localization
+@using Microsoft.Extensions.Options
+@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model BrowseModel
+@inject IStringLocalizer<FileManagerStringResources> sr
+@inject IOptions<FileManagerIcons> iconsAccessor
+@{
+    var icons = iconsAccessor.Value;
+}
+<div class="row">
+    <div class="col-md-10 ">
+        <input class="form-control" disabled type="text" id="fileSelection" name="fileSelection" placeholder='@sr["Selected File"]' />
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary" id="btnSelector">@sr["Select"]</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5" style="height: 500px;overflow: scroll;">
+        <a id="btnRoot" href="#" class="btn btn-primary rootbutton" title='@sr["Select Root Folder"]'>@sr["root"]</a>
+        <div id="tree"></div>
+    </div>
+    <div class="col-md-7">
+        <div id="divPreview" class="collapse">
+            <div style="margin-bottom:5px;">
+                <img id="filePreview" src="~/cr/css/1x1.gif" height="400" alt='@sr["Preview selected image"]' />
+            </div>
+
+            <button class="btn btn-primary" id="btnSelectorAlt">@sr["Select"]</button>
+            <button id="btnSelectForCrop" class="btn btn-primary collapse"><i class="@icons.Cut" aria-hidden="true"></i> @sr["Crop"]</button>
+        </div>
+        <div id="divVideoPreview" class="collapse">
+            <video id="video-player" playsinline controls>
+                <source id="video-source" src="" type="video/mp4" />
+            </video>
+        </div>
+        <div id="divAudioPreview" class="collapse">
+            <audio id="audio-player" controls>
+                <source id="audio-source" src="" type="audio/mp3" />
+            </audio>
+        </div>
+        <div id="divFileSize" style="max-width:550px;"></div>
+        <div id="divFileSizeWarning" class="text-danger" style="display:none;">
+            @sr["This image file is large and should not be used directly in content, consider using a resized version."]
+        </div>
+        <div>
+
+            <form id="frmNewFolder" asp-action="CreateFolder" asp-controller="FileManager">
+                <div class="row align-items-left mt-1 mb-3 gx-1">
+                    <div class="col-2 w-auto align-self-center">
+                        <input type="text" class="form-control" disabled id="newFolderCurrentDir" name="newFolderCurrentDir" value="@Model.InitialVirtualPath" />
+                        <input type="hidden" id="hdnCurrentVirtualPath" name="currentVirtualPath" value="@Model.InitialVirtualPath" />
+                    </div>
+                    <div class="col-2 w-auto align-self-center">
+                        <input type="text" class="form-control" id="newFolderName" name="newFolderName" />
+                    </div>
+                    <div class="col-2 w-auto align-self-center gx-1">
+                        <button id="btnCreateFolder" type="submit" class="btn btn-primary"><i class="@icons.Folder" aria-hidden="true"></i> @sr["Create Folder"]</button>
+                    </div>
+                </div>
+            </form>
+
+
+            <form id="frmRenameFolder" asp-action="RenameFolder" asp-controller="FileManager" class="collapse">
+                <div class="row align-items-left mt-1 mb-3 gx-1">
+                    <div class="col-2 w-auto align-self-center">
+                        <input type="hidden" id="folderToRename" name="folderToRename" />
+                        <input type="text" class="form-control" id="newNameSegment" name="newNameSegment" />
+                    </div>
+
+                    <div class="col-2 w-auto align-self-center gx-1">
+                        <button id="btnRenameFolderPrompt" type="button" class="btn btn-danger btn-ok">@sr["Rename Folder"]</button>
+                    </div>
+                </div>
+
+                <div id="mdlRenameFolder" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmRenameFolderHeading">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="confirmRenameFolderHeading">@sr["Confirm Rename Folder"]</h4>
+                                <button type="button" data-bs-dismiss="modal" class="btn-close" aria-label='@sr["Close"]'></button>
+                            </div>
+                            <div id="renameFolderModalBody" class="modal-body">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">@sr["Cancel"]</button>
+                                <button id="btnRenameFolder" type="button" class="btn btn-danger btn-ok">@sr["Rename Folder"]</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+            <form id="frmDeleteFolder" asp-action="DeleteFolder" asp-controller="FileManager" class="form-inline collapse">
+                <input type="hidden" id="folderToDelete" name="folderToDelete" />
+                <button id="btnDeleteFolderPrompt" type="button" class="btn btn-danger btn-ok"><i class="@icons.Delete" aria-hidden="true"></i> @sr["Delete Folder"]</button>
+                <div id="mdlDeleteFolder" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteFolderHeading">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="confirmDeleteFolderHeading">@sr["Confirm Delete"]</h4>
+                                <button type="button" data-bs-dismiss="modal" class="btn-close" aria-label='@sr["Close"]'></button>
+                            </div>
+                            <div id="deleteFolderModalBody" class="modal-body">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">@sr["Cancel"]</button>
+                                <button id="btnDeleteFolder" type="button" class="btn btn-danger btn-ok"><i class="@icons.Delete" aria-hidden="true"></i> @sr["Delete Folder"]</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <form id="frmRenameFile" asp-action="RenameFile" asp-controller="FileManager" class="collapse">
+                <div class="row align-items-left mt-1 mb-1 gx-2">
+                    <div class="col-2 w-auto align-self-center">
+                        <input type="hidden" id="fileToRename" name="fileToRename" />
+                        <input type="text" class="form-control" id="newFileNameSegment" name="newNameSegment" style="min-width:50%;" />
+                        <div id="mdlRenameFile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmRenameFileHeading">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="confirmRenameFileHeading">@sr["Confirm Rename File"] +</h4>
+                                        <button type="button" data-bs-dismiss="modal" class="btn-close" aria-label='@sr["Close"]'></button>
+                                    </div>
+                                    <div id="renameFileModalBody" class="modal-body">
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">@sr["Cancel"]</button>
+                                        <button id="btnRenameFile" type="button" class="btn btn-danger btn-ok">@sr["Rename File"]</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 w-auto align-self-center">
+                        <button id="btnRenameFilePrompt" type="button" class="btn btn-primary btn-ok">@sr["Rename File"]</button>
+                    </div>
+                </div>
+            </form>
+
+            <form id="frmDeleteFile" asp-action="DeleteFile" asp-controller="FileManager" class="collapse">
+                <input type="hidden" id="fileToDelete" name="fileToDelete" />
+                <button id="btnDeleteFilePrompt" type="button" class="btn btn-danger btn-ok"><i class="@icons.Delete" aria-hidden="true"></i> @sr["Delete File"]</button>
+                <a id="lnkDownloadFile" href="#" target="_blank" class="btn btn-outline-primary collapse" style="display:inline-block;"><i class="@icons.Download" aria-hidden="true"></i> @sr["Download"]</a>
+                <div id="mdlDeleteFile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteFileHeading">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="confirmDeleteFileHeading">@sr["Confirm Delete"]</h4>
+                                <button type="button" data-bs-dismiss="modal" class="btn-close" aria-label='@sr["Close"]'></button>
+                            </div>
+                            <div id="deleteFileModalBody" class="modal-body">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">@sr["Cancel"]</button>
+                                <button id="btnDeleteFile" type="button" class="btn btn-danger btn-ok"><i class="@icons.Delete" aria-hidden="true"></i> @sr["Delete File"]</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>

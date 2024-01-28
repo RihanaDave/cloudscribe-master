@@ -1,0 +1,46 @@
+﻿@model cloudscribe.Core.Web.ViewModels.SiteSettings.SecuritySettingsViewModel
+@inject IStringLocalizer<CloudscribeCore> sr
+@inject cloudscribe.Core.Models.Identity.ILdapHelper ldap
+@if (ldap.IsImplemented)
+{
+<fieldset class="border p-2">
+    <legend class="w-auto">@sr["LDAP / Active Directory Settings"]</legend>
+    <div class="mb-3">
+        <label class="form-label" asp-for="LdapServer">@sr["LDAP Server(s)"]</label>
+        <input asp-for="LdapServer" class="form-control" placeholder="@sr["Hostname, or a comma separated list of hostnames"]" />
+        <span asp-validation-for="LdapServer" class="invalid-feedback"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="LdapPort">@sr["LDAP Server Port"]</label>
+        <input asp-for="LdapPort" class="form-control" placeholder="@sr["Usually 389, or 636 if using SSL"]" />
+        <span asp-validation-for="LdapPort" class="invalid-feedback"></span>
+    </div>
+    <input type="hidden" asp-for="LdapRootDN" />
+    <input type="hidden" asp-for="LdapUserDNKey" />
+    <div class="mb-3">
+        <label class="form-label" asp-for="LdapUserDNFormat">@sr["LDAP User DN Format"]</label>
+        <select asp-for="LdapUserDNFormat" class="form-select">
+            <option value="username@LDAPDOMAIN">@sr["username@LDAP Domain (Active Directory using userPrincipalName)"]</option>
+            <option value="LDAPDOMAIN">@sr["LDAP Domain\\username (Active Directory using sAMAccountName)"]</option>
+            <option value="uid=username,LDAPDOMAIN">@sr["uid=username,Base DN (Open LDAP / 389 Directory Server)"]</option>
+
+        </select>
+        <span asp-validation-for="LdapUserDNKey" class="invalid-feedback"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="LdapDomain">@sr["LDAP Domain / Base DN"]</label>
+        <input asp-for="LdapDomain" class="form-control" />
+        <span asp-validation-for="LdapDomain" class="invalid-feedback"></span>
+    </div>
+    <div class="mb-3">
+        <div class="form-check">
+            <input asp-for="LdapUseSsl" class="form-check-input" />
+            <label asp-for="LdapUseSsl" class="form-check-label">@sr["LDAP Uses SSL"]</label>
+        </div>
+    </div>
+
+</fieldset>
+}
+
+
+

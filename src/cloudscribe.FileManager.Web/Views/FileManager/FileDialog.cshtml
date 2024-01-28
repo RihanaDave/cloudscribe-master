@@ -1,0 +1,98 @@
+﻿@using cloudscribe.FileManager.Web.Models
+@using Microsoft.Extensions.Localization
+@using Microsoft.Extensions.Options
+@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model BrowseModel
+@inject IOptions<AutomaticUploadOptions> autoUploadOptionsAccessor
+@inject IStringLocalizer<FileManagerStringResources> sr
+@using Microsoft.AspNetCore.Antiforgery
+@inject IAntiforgery antiforgery
+@inject IOptions<FileManagerIcons> iconsAccessor
+@{
+    Layout = "_LayoutDialog";
+    var tokens = antiforgery.GetAndStoreTokens(Context);
+    var upoadOptions = autoUploadOptionsAccessor.Value;
+    //https://github.com/patternfly/patternfly-bootstrap-treeview
+    var icons = iconsAccessor.Value;
+    string heading;
+    switch (Model.Type)
+    {
+        case "image":
+            heading = sr["Image Files"];
+            break;
+
+        case "video":
+            heading = sr["Video Files"];
+            break;
+
+
+        case "audio":
+            heading = sr["Audio Files"];
+            break;
+
+        default:
+            heading = sr["Files"];
+            break;
+
+
+
+    }
+}
+
+@section styles {
+    <partial name="FileManagerStylePartial" />
+}
+<span id="fmconfig" aria-hidden="true" class="collapse"
+      data-filetree-url="@Model.FileTreeServiceUrl"
+      data-anti-forgery-token="@tokens.RequestToken"
+      data-upload-url="@Model.UploadServiceUrl"
+      data-ckfunc="@Model.CKEditorFuncNum"
+      data-create-folder-url="@Model.CreateFolderServiceUrl"
+      data-can-delete="@Model.CanDelete"
+      data-can-select="true"
+      data-can-download="false"
+      data-delete-folder-url="@Model.DeleteFolderServiceUrl"
+      data-rename-folder-url="@Model.RenameFolderServiceUrl"
+      data-delete-file-url="@Model.DeleteFileServiceUrl"
+      data-rename-file-url="@Model.RenameFileServiceUrl"
+      data-root-virtual-path="@Model.InitialVirtualPath"
+      data-empty-preview-url='@Url.Content("~/cr/css/1x1.gif")'
+      data-allowed-file-extensions="@Model.AllowedFileExtensions"></span>
+<div id="alert_placeholder"></div>
+<div class="container-fluid">
+    <h3>@heading</h3>
+    <ul class="nav nav-tabs" role="tablist">
+        <li id="tab1" class="nav-item" role="tab">
+            <a href="#tabBrowse" data-bs-toggle="tab" class="nav-link active"><i class="@icons.Browse" aria-hidden="true"></i>&nbsp;@sr["Browse"]</a>
+        </li>
+        <li id="tab2" class="nav-item" role="tab">
+            <a href="#tabUpload" class="nav-link" data-bs-toggle="tab"><i class="@icons.Upload" aria-hidden="true"></i>&nbsp;@sr["Upload"]</a>
+        </li>
+        @if (Model.Type == "image")
+        {
+            <li id="tab3" class="nav-item" role="tab">
+                <a id="lnkCrop" class="nav-link" href="#tabCrop" data-bs-toggle="tab"><i class="@icons.Cut" aria-hidden="true"></i>&nbsp;@sr["Crop"]</a>
+            </li>
+        }
+
+    </ul>
+    <div class="tab-content ">
+        <div class="tab-pane active" id="tabBrowse" role="tabpanel" aria-labelledby="tab1">
+            <partial name="BrowsePartial" model="Model" />
+        </div>
+        <div class="tab-pane" id="tabUpload" role="tabpanel" aria-labelledby="tab2">
+            <partial name="UploadPartial" model="Model" />
+        </div>
+        @if (Model.Type == "image")
+        {
+            <div class="tab-pane" id="tabCrop" role="tabpanel" aria-labelledby="tab3">
+                <partial name="CropPartial" model="Model" />
+            </div>
+        }
+    </div>
+</div>
+@section scripts {
+    <partial name="FileManagerScriptsPartial" />
+   
+
+}

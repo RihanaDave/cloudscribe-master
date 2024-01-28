@@ -1,0 +1,231 @@
+
+http://stackoverflow.com/questions/3184478/how-many-columns-is-too-many-columns
+
+
+
+# legacyfields that should be dropped from mp_Sites
+# some of these could be useful in the future but do not belong in this table
+# 
+
+SiteAlias
+Logo
+Icon
+AllowUserSkins
+AllowPageSkins
+AllowHideMenuOnPages
+CaptchaProvider
+EditorProviderName
+EditorSkin
+DefaultPageKeywords
+DefaultPageDescription
+DefaultPageEncoding
+DefaultAdditionalMetaTag
+DefaultFriendlyUrlPatternEnum
+AllowPasswordRetrieval
+AllowPasswordReset
+RequiresUniqueEmail
+PasswordFormat
+PwdStrengthRegex
+EnableMyPageFeature
+DatePickerProvider
+AllowOpenIdAuth
+WordpressAPIKey
+WindowsLiveAppId
+WindowsLiveKey
+GmapApiKey
+
+
+#fields to add
+ 
+AddThisDotComUsername
+SiteFolderName
+PreferredHostName
+MicrosoftClientId
+MicrosoftClientSecret
+
+
+#fields currently in mp_SiteSettingsEx that should be added to mp_Sites
+
+TimeZoneId Eastern Standard Time
+AllowDbFallbackWithLdap false
+AllowEmailLoginWithLdapDbFallback false  rename shorter as EmailLdapDbFallback
+AllowPersistentLogin true
+CompanyName
+CompanyStreetAddress
+CompanyStreetAddress2
+CompanyRegion
+CompanyLocality
+CompanyCountry
+CompanyPostalCode 
+CompanyPublicEmail
+GoogleAnalyticsProfileId
+
+CompanyPhone
+CompanyFax
+CurrencyGuid ff2dde1b-e7d7-4c3a-9ab4-6474345e0f31
+DefaultCountryGuid a71d6727-61e7-4282-9fcb-526d1e7bc24f
+DefaultStateGuid 00000000-0000-0000-0000-000000000000
+FacebookAppId
+FacebookAppSecret
+GoogleClientId
+GoogleClientSecret
+TwitterConsumerKey
+TwitterConsumerSecret
+LoginInfoTop
+LoginInfoBottom
+RegistrationAgreement - TermsOfUse
+RegistrationPreamble
+RequireCaptchaOnLogin false rename as CaptchaOnLogin
+RequireCaptchaOnRegistration rename as CaptchaOnRegistration
+SiteIsClosed false
+SiteIsClosedMessage
+PrivacyPolicy
+
+SMTPPassword
+SMTPPort
+SMTPPreferredEncoding
+SMTPRequiresAuthentication renamed as SMTPRequiresAuth
+SMTPServer
+SMTPUser
+SMTPUseSsl
+
+# rows/keys to be deleted from mp_SiteSettingsEx and ExDef
+
+WebSnaprKey 
+Slogan
+SiteMapSkin
+ShowAlternateSearchIfConfigured
+RpxNowAdminUrl 
+RpxNowApiKey 
+RpxNowApplicationName 
+PrivacyPolicyUrl
+PrimarySearchEngine
+PrimaryPaymentGateway
+PayPalUsePayPalStandard
+PayPalStandardSandboxPDTId
+PayPalStandardSandboxEmail
+PayPalStandardProductionPDTId
+PayPalStandardProductionEmail
+PayPalSandboxAPIUsername
+PayPalSandboxAPISignature
+PayPalSandboxAPIPassword
+PayPalProductionAPIUsername
+PayPalProductionAPISignature
+PayPalProductionAPIPassword
+PaymentGatewayUseTestMode
+OpenSearchName
+NewsletterEditor
+MetaProfile
+Is503TaxExempt
+IntenseDebateAccountId
+GoogleSandboxMerchantKey
+GoogleSandboxMerchantID
+GoogleProductionMerchantKey
+GoogleProductionMerchantID
+GoogleCustomSearchId
+GoogleAnalyticsSettings
+GoogleAnalyticsPassword
+GoogleAnalyticsEmail
+ForceContentVersioning
+EnableWoopra
+EnableContentWorkflow
+DisqusSiteShortName
+CommentProvider
+BingAPIId
+AvatarSystem
+AuthorizeNetSandboxAPITransactionKey
+AuthorizeNetSandboxAPILogin
+AuthorizeNetProductionAPITransactionKey
+AuthorizeNetProductionAPILogin
+AppLogoForWindowsLive
+AllowWindowsLiveMessengerForMembers
+AllowUserEditorPreference
+
+CommerceReportViewRoles 
+GeneralBrowseAndUploadRoles
+RolesNotAllowedToEditModuleSettings
+RolesThatCanCreateRootPages
+RolesThatCanDeleteFilesInEditor
+RolesThatCanEditContentTemplates
+RolesThatCanEditSkins
+RolesThatCanLookupUsers
+RolesThatCanManageUsers
+RolesThatCanViewGoogleAnalytics
+RolesThatCanViewMemberList
+SiteRootEditRoles
+SiteRootDraftEditRoles
+UserFilesBrowseAndUploadRoles
+
+
+mp_Users table columns to remove
+
+ApprovedForForums default 1 could rename to AccountApproved but maybe that is the same as profileapproved
+ProfileApproved or rename to AccountApproved
+Occupation
+Interests
+MSN
+Yahoo
+AIM
+ICQ
+TotalPosts
+TimeOffsetHours
+Skin
+PasswordSalt
+OpenIDURI
+WindowsLiveID
+Pwd
+EditorPreference
+PwdFormat
+MobilePIN
+TotalRevenue
+-- if we are going to support security questions/answers, it should be plural questions in a separate table
+PasswordQuestion
+PasswordAnswer
+
+mp_Users columns to add
+AccountApproved
+
+
+# more changes 2016-01-26
+
+DROP mp_Sites
+MinReqNonAlphaChars
+AllowUserFullNameChange
+PasswordAttemptWindowMinutes
+ApiKeyExtra1
+ApiKeyExtra2
+ApiKeyExtra3
+ApiKeyExtra4
+ApiKeyExtra5
+UseSslOnAllPages
+
+ADD
+RequireConfirmedPhone 0
+DefaultEmailFromAlias 100
+AccountApprovalEmailCsv
+DkimPublicKey
+DkimPrivateKey
+DkimDomain 255
+DkimSelector 128
+SignEmailWithDkim 0
+OidConnectAppId 255
+OidConnectAppSecret text
+SmsClientId 255
+SmsSecureToken text
+SmsFrom 100
+
+mp_Users
+DROP
+FailedPasswordAnswerAttemptCount
+FailedPasswordAnswerAttemptWindowStart
+FailedPasswordAttemptWindowStart
+EmailChangeGuid
+RegisterConfirmGuid
+PasswordResetGuid
+LastLockoutDate
+LastActivityDate
+
+ADD
+NewEmailApproved
+NormalizedUserName 50
+CanAutoLockout 1

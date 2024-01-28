@@ -1,0 +1,14 @@
+﻿@model SiteContext
+@inject IStringLocalizer<CloudscribeCore> sr
+@{
+    ViewData["Title"] = sr["Privacy Policy"];
+}
+<h1>@ViewData["Title"]</h1>
+@if (string.IsNullOrWhiteSpace(Model.PrivacyPolicy))
+{
+    @sr["This site has not yet defined a privacy policy"]
+}
+else
+{
+    @Html.Raw(Model.PrivacyPolicy)
+}

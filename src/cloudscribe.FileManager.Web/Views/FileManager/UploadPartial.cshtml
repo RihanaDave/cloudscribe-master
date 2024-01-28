@@ -1,0 +1,109 @@
+﻿@using cloudscribe.FileManager.Web.Models
+@using Microsoft.Extensions.Localization
+@using Microsoft.Extensions.Options
+@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model BrowseModel
+@inject IOptions<AutomaticUploadOptions> autoUploadOptionsAccessor
+@inject IStringLocalizer<FileManagerStringResources> sr
+@inject IOptions<FileManagerIcons> iconsAccessor
+@{
+    var upoadOptions = autoUploadOptionsAccessor.Value;
+    var icons = iconsAccessor.Value;
+}
+<div class="col-md-12 fileupload">
+    @if (Model.Type == "image")
+    {
+        <h2>@sr["Upload Image Files"]</h2>
+    }
+    else
+    {
+        <h2>@sr["Upload Files"]</h2>
+    }
+
+    <span class="operationinstructions">
+        @sr["First use the browse tab to select the folder where you would like the new files to be placed. Then drag and drop files onto the dropzone or browse to select the files on your computer, once files are selected an Upload button will appear.  Files will be uploaded to the current folder:"]"
+    </span>
+    <div>
+        <span class="form-control" id="currentFolder" name="fileSelection">@Model.InitialVirtualPath</span>
+    </div>
+    <form id="frmUpload" method="post" enctype="multipart/form-data" asp-controller="FileManager" asp-action="AutomaticUpload">
+        <input type="hidden" id="uploadCurrentDir" name="currentDir" />
+
+
+        <div class="row align-items-left mt-1 mb-3 gx-1">
+            <div class="col-2 w-auto align-self-center">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="maxWidth">@sr["Max Width"]</label>
+                    </div>
+                    <input type="text" class="form-control" id="maxWidth" name="maxWidth" value="@upoadOptions.WebSizeImageMaxWidth" />
+                </div>
+            </div>
+
+            <div class="col-2 w-auto align-self-center">
+                <div class="input-group ms-1">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="maxHeight">@sr["Max Height"]</label>
+                    </div>
+                    <input type="text" class="form-control" id="maxHeight" name="maxHeight" value="@upoadOptions.WebSizeImageMaxHeight" />
+                </div>
+            </div>
+
+            <div class="col-2 w-auto align-self-center gx-1">
+                <div class="mt-2 form-check ms-2">
+                    <input asp-for="ResizeImages" class="form-check-input" />
+                    <label class="form-check-label" asp-for="ResizeImages"> @sr["Reduce Image Size For Web"]</label>
+                    <br />
+                    <input asp-for="KeepOriginal" class="form-check-input" />
+                    <label class="form-check-label" asp-for="KeepOriginal"> @sr["Keep Original Size Images"]</label>
+                </div>
+
+            </div>
+        </div>
+
+
+        @*<div class="form-inline">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="maxWidth">@sr["Max Width"]</label>
+                </div>
+                <input type="text" class="form-control" id="maxWidth" name="maxWidth" value="@upoadOptions.WebSizeImageMaxWidth" />
+            </div>
+            <div class="input-group ms-1">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="maxHeight">@sr["Max Height"]</label>
+                </div>
+                <input type="text" class="form-control" id="maxHeight" name="maxHeight" value="@upoadOptions.WebSizeImageMaxHeight" />
+            </div>
+            <div class="mb-3 form-check ms-1">
+                <input asp-for="ResizeImages" class="form-check-input" />
+                <label class="form-check-label" asp-for="ResizeImages"> @sr["Reduce Image Size For Web"]</label>
+            </div>
+            <div class="mb-3 form-check ms-2">
+                <input asp-for="KeepOriginal" class="form-check-input" />
+                <label class="form-check-label" asp-for="KeepOriginal"> @sr["Keep Original Size Images"]</label>
+            </div>
+        </div>*@
+
+        <div class="mb-3">
+            <div id="divFileUpload" class="fileupload">
+                <p>@sr["Upload one or more files using this form:"]</p>
+                <div id="dropZone" class="fileupload-dropzone">
+                    <span>@sr["Drag and drop files here"]</span>
+                </div>
+                <div id="pnlFiles" class="uploadcontainer">
+                    <div id="browseButton" class="btn btn-success fileinput-button">
+                        <i class="@icons.ChooseFiles"></i>
+                        <span>@sr["Choose Files"]</span>
+                        <input id="fileupload" type="file" name="fileupload" multiple />
+                    </div>
+                </div>
+            </div>
+            <div id="progress" class="progress" style="height:20px;">
+                <div class="progress-bar progress-bar-striped bg-success" role="progressbar"></div>
+            </div>
+            <div id="fileList" class='uploadfilelist'></div>
+            <div id="ui" class='uploadfilesui'></div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,400 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NavNode key="Home" controller="Home" action="Index" text="Home">
+  <Children>
+    <NavNode key="About" controller="Home" action="About" text="About">
+      <Children />
+    </NavNode>
+    <NavNode key="Contact" controller="Home" action="Contact" text="Contact">
+      <Children />
+    </NavNode>
+      <NavNode key="Test" controller="Home" action="Contact" text="Test">
+          <Children />
+      </NavNode>
+    
+    <NavNode key="SiteAdmin" 
+             controller="SiteAdmin" 
+             action="Index" 
+             text="Administration" 
+             viewRoles="Administrators,Content Administrators">
+      <Children>
+        <NavNode key="SiteList" 
+                 controller="SiteAdmin" 
+                 action="SiteList" 
+                 text="Site List" 
+                 componentVisibility="breadcrumbs,childtree,parenttree" 
+                 viewRoles="ServerAdmins">
+          <Children>
+            <NavNode key="NewSite" 
+                     controller="SiteAdmin" 
+                     action="NewSite" 
+                     text="New Site" 
+                     componentVisibility="breadcrumbs,childtree" 
+                     viewRoles="ServerAdmins">
+              <Children />
+            </NavNode>
+          </Children>
+        </NavNode>
+        
+        <NavNode 
+          key="BasicSettings" 
+          controller="SiteAdmin" 
+          action="SiteInfo" 
+          text="Site Settings" 
+          preservedRouteParameters="siteId" 
+          componentVisibility="breadcrumbs,childtree,parenttree" 
+          viewRoles="Administrators,Content Administrators">
+          <Children>
+            <NavNode key="SiteHostMappings" 
+                     controller="SiteAdmin" 
+                     action="SiteHostMappings" 
+                     text="Domain Mappings" 
+                     preservedRouteParameters="siteId" 
+                     componentVisibility="breadcrumbs" 
+                     viewRoles="Administrators,Content Administrators">
+              <Children />
+            </NavNode>
+          </Children>
+        </NavNode>
+        <NavNode key="CompanyInfo" 
+                 controller="SiteAdmin" 
+                 action="CompanyInfo" 
+                 text="Company Info" 
+                 preservedRouteParameters="siteId" 
+                 componentVisibility="breadcrumbs,childtree,parenttree" 
+                 viewRoles="Administrators,Content Administrators">
+          <Children>  
+          </Children>
+        </NavNode>
+        <NavNode key="MailSettings"
+                 controller="SiteAdmin"
+                 action="MailSettings"
+                 text="Email Settings"
+                 preservedRouteParameters="siteId"
+                 componentVisibility="breadcrumbs,childtree,parenttree"
+                 viewRoles="Administrators">
+          <Children>
+          </Children>
+        </NavNode>
+        <NavNode key="SmsSettings"
+                 controller="SiteAdmin"
+                 action="SmsSettings"
+                 text="SMS Settings"
+                 preservedRouteParameters="siteId"
+                 componentVisibility="breadcrumbs,childtree,parenttree"
+                 viewRoles="Administrators">
+          <Children>
+          </Children>
+        </NavNode>
+        <NavNode key="SecuritySettings" 
+                 controller="SiteAdmin" 
+                 action="SecuritySettings" 
+                 text="Security Settings"  
+                 preservedRouteParameters="siteId" 
+                 componentVisibility="breadcrumbs,childtree,parenttree" 
+                 viewRoles="Administrators">
+          <Children>
+            <NavNode key="GeneralSecuritySettings"
+                     controller="SiteAdmin"
+                     action="SecuritySettings"
+                     text="General"
+                     preservedRouteParameters="siteId"
+                     componentVisibility="breadcrumbs,childtree,parenttree"
+                     viewRoles="Administrators,Content Administrators">
+              <Children />
+            </NavNode>
+            <NavNode key="CaptchaSettings" 
+                     controller="SiteAdmin" 
+                     action="Captcha" 
+                     text="Captcha Settings" 
+                     preservedRouteParameters="siteId" 
+                     componentVisibility="breadcrumbs,childtree,parenttree" 
+                     viewRoles="Administrators,Content Administrators">
+              <Children />
+            </NavNode>
+            <NavNode key="SocialLogins"  
+                     controller="SiteAdmin" 
+                     action="SocialLogins" 
+                     text="Social Logins" 
+                     preservedRouteParameters="siteId" 
+                     componentVisibility="breadcrumbs,childtree,parenttree" 
+                     viewRoles="Administrators,Content Administrators">
+              <Children />
+            </NavNode>
+            <NavNode key="OIDApiResources"
+                    controller="ApiResource"
+                    action="Index"
+                    text="API Resources"
+                    preservedRouteParameters="siteId"
+                    componentVisibility="breadcrumbs,childtree,parenttree"
+                    viewRoles="Administrators,ServerAdmins">
+              <Children>
+                <NavNode key="EditApiResource"
+                   controller="ApiResource"
+                   action="EditApiResource"
+                   text="Edit API Resource"
+                   preservedRouteParameters="siteId,name"
+                   componentVisibility="breadcrumbs"
+                   viewRoles="Administrators,ServerAdmins">
+                  <Children />
+                </NavNode>
+                <NavNode key="NewApiResource"
+                   controller="ApiResource"
+                   action="NewApiResource"
+                   text="New API Resource"
+                   preservedRouteParameters="siteId"
+                   componentVisibility="breadcrumbs"
+                   viewRoles="Administrators,ServerAdmins">
+                  <Children />
+                </NavNode>
+              </Children>
+            </NavNode>
+            <NavNode key="OIDClients"
+                     controller="Clients"
+                     action="Index"
+                     text="API Clients"
+                     preservedRouteParameters="siteId"
+                     componentVisibility="breadcrumbs,childtree,parenttree"
+                     viewRoles="Administrators,ServerAdmins">
+              <Children>
+                <NavNode key="EditClient"
+                   controller="Clients"
+                   action="EditClient"
+                   text="Edit Client"
+                   preservedRouteParameters="siteId,clientId"
+                   componentVisibility="breadcrumbs"
+                   viewRoles="Administrators,ServerAdmins">
+                  <Children />
+                </NavNode>
+                <NavNode key="NewClient"
+                   controller="Clients"
+                   action="NewClient"
+                   text="New Client"
+                   preservedRouteParameters="siteId"
+                   componentVisibility="breadcrumbs"
+                   viewRoles="Administrators,ServerAdmins">
+                  <Children />
+                </NavNode>
+              </Children>
+            </NavNode>
+            <NavNode key="OIDIdentityResources"
+                     controller="IdentityResource"
+                     action="Index"
+                     text="Identity Resources"
+                     preservedRouteParameters="siteId"
+                     componentVisibility="breadcrumbs,childtree,parenttree"
+                     viewRoles="Administrators,ServerAdmins">
+              <Children>
+                <NavNode key="EditIdentityResource"
+                   controller="IdentityResource"
+                   action="EditResource"
+                   text="Edit Identity Resource"
+                   preservedRouteParameters="siteId,name"
+                   componentVisibility="breadcrumbs"
+                   viewRoles="Administrators,ServerAdmins">
+                  <Children />
+                </NavNode>
+                <NavNode key="NewIdentityResource"
+                   controller="IdentityResource"
+                   action="NewResource"
+                   text="New Identity Resource"
+                   preservedRouteParameters="siteId"
+                   componentVisibility="breadcrumbs"
+                   viewRoles="Administrators,ServerAdmins">
+                  <Children />
+                </NavNode>
+              </Children>
+            </NavNode>
+            
+          </Children>
+        </NavNode>
+        <NavNode key="LoginPageInfo" 
+                 controller="SiteAdmin" 
+                 action="LoginPageInfo" 
+                 text="Login Page Info" 
+                 preservedRouteParameters="siteId" 
+                 componentVisibility="breadcrumbs,childtree,parenttree" 
+                 viewRoles="Administrators,Content Administrators">
+          <Children>
+          </Children>
+        </NavNode>
+        <NavNode key="RegisterPageInfo" 
+                 controller="SiteAdmin" 
+                 action="RegisterPageInfo" 
+                 text="Register Page Info" 
+                 preservedRouteParameters="siteId" 
+                 componentVisibility="breadcrumbs,childtree,parenttree" 
+                 viewRoles="Administrators,Content Administrators">
+          <Children>
+          </Children>
+        </NavNode>
+        
+        
+        
+        <NavNode key="UserAdmin" 
+                 controller="UserAdmin" 
+                 action="Index" 
+                 preservedRouteParameters="siteId" 
+                 text="User Management"  
+                 componentVisibility="breadcrumbs,childtree,parenttree" 
+                 viewRoles="Administrators,ServerAdmins">
+          <Children>
+            <NavNode key="UserEdit" 
+                     controller="UserAdmin" 
+                     action="UserEdit"
+                     preservedRouteParameters="siteId"
+                     text="New User" 
+                     componentVisibility="breadcrumbs" 
+                     viewRoles="Administrators">
+              <Children />
+            </NavNode>
+              <NavNode key="NewUser"
+                     controller="UserAdmin"
+                     action="NewUser"
+                     preservedRouteParameters="siteId"
+                     text="New User"
+                     componentVisibility="breadcrumbs,childtree"
+                     viewRoles="Administrators">
+                <Children />
+            </NavNode>
+            <NavNode key="UserList"
+                     controller="UserAdmin"
+                     action="Index"
+                     preservedRouteParameters="siteId"
+                     text="User List"
+                     componentVisibility="breadcrumbs,childtree,parenttree"
+                     viewRoles="Administrators">
+              <Children />
+            </NavNode>
+            <NavNode key="LockedUsers"
+                     controller="UserAdmin"
+                     action="LockedUsers"
+                     preservedRouteParameters="siteId"
+                     text="Locked Users"
+                     componentVisibility="breadcrumbs,childtree,parenttree"
+                     viewRoles="Administrators">
+              <Children />
+            </NavNode>
+            <NavNode key="UnApprovedUsers"
+                     parentKey="UserAdmin"
+                     controller="UserAdmin"
+                     action="UnApprovedUsers"
+                     preservedRouteParameters="siteId"
+                     text="Un-Approved Users"
+                     componentVisibility="breadcrumbs,childtree,parenttree"
+                     viewRoles="Administrators">
+              <Children />
+            </NavNode>
+            <NavNode key="UserSearch" 
+                     controller="UserAdmin" 
+                     action="Search"
+                     preservedRouteParameters="siteId"
+                     text="User Search" 
+                     componentVisibility="breadcrumbs" 
+                     viewRoles="Administrators">
+              <Children />
+            </NavNode>
+            <NavNode key="IpSearch"  
+                     controller="UserAdmin" 
+                     action="IpSearch"
+                     preservedRouteParameters="siteId"
+                     text="IpSearch" 
+                     componentVisibility="breadcrumbs" 
+                     viewRoles="Administrators">
+              <Children />
+            </NavNode>
+          </Children>
+        </NavNode>
+        <NavNode key="RoleAdmin" 
+                 controller="RoleAdmin" 
+                 action="Index"
+                 preservedRouteParameters="siteId"
+                 text="Role Management" 
+                 componentVisibility="breadcrumbs,childtree,parenttree" 
+                 viewRoles="Administrators">
+          <Children>
+            <NavNode key="RoleMembers" 
+                     controller="RoleAdmin" 
+                     action="RoleMembers"  
+                     text="Role Members" 
+                     preservedRouteParameters="siteId,roleId,pageNumber,pageSize" 
+                     componentVisibility="breadcrumbs" 
+                     viewRoles="Administrators, Role Administrators">
+              <Children />
+            </NavNode>
+            <NavNode key="RoleEdit" 
+                     controller="RoleAdmin" 
+                     action="RoleEdit" text="NewRole" 
+                     preservedRouteParameters="siteId,roleId" 
+                     componentVisibility="breadcrumbs,childtree" 
+                     viewRoles="Administrators, Role Administrators">
+              <Children />
+            </NavNode>
+          </Children>
+        </NavNode>
+        <NavNode key="CoreData" 
+                 controller="CoreData" 
+                 action="Index" 
+                 text="Core Data" 
+                 componentVisibility="breadcrumbs,childtree" 
+                 viewRoles="ServerAdmins">
+          <Children>
+            <NavNode key="CountryListPage" 
+                     controller="CoreData" 
+                     action="CountryListPage" 
+                     text="Country State Administration" 
+                     componentVisibility="breadcrumbs,childtree" 
+                     viewRoles="ServerAdmins">
+              <Children>
+                <NavNode key="CountryEdit" 
+                         controller="CoreData" 
+                         action="CountryEdit" 
+                         text="New Country" 
+                         preservedRouteParameters="id" 
+                         componentVisibility="breadcrumbs,childtree" 
+                         viewRoles="ServerAdmins">
+                  <Children />
+                </NavNode>
+                <NavNode key="StateListPage" 
+                         controller="CoreData" 
+                         action="StateListPage" 
+                         text="States" 
+                         preservedRouteParameters="countryId" 
+                         componentVisibility="breadcrumbs" 
+                         viewRoles="ServerAdmins">
+                  <Children>
+                    <NavNode key="StateEdit"  
+                             controller="CoreData" 
+                             action="StateEdit" text="New State" 
+                             preservedRouteParameters="countryId" 
+                             componentVisibility="breadcrumbs" 
+                             viewRoles="ServerAdmins">
+                      <Children />
+                    </NavNode>
+                  </Children>
+                </NavNode>
+              </Children>
+            </NavNode>
+          </Children>
+        </NavNode>
+
+        <NavNode key="SystemInfo" 
+                 controller="SystemInfo" 
+                 action="Index" 
+                 text="System Information"  
+                 componentVisibility="breadcrumbs,childtree" 
+                 viewRoles="Administrators">
+          <Children>
+            <NavNode key="SystemLog" 
+                     controller="SystemLog" 
+                     action="Index" 
+                     text="System Log"  
+                     componentVisibility="breadcrumbs,childtree" 
+                     viewRoles="ServerAdmins" />
+          </Children>
+        </NavNode>
+      
+      
+      </Children>
+    </NavNode>
+  </Children>
+</NavNode>
